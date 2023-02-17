@@ -7,7 +7,8 @@ const postController = require('../controllers/post.controller');
 
 
 router.get('/', verifyToken, postController.getPosts);
-router.post('/travel', verifyToken, upload.single('image'), postController.createPost)
-
+router.get('/:id', verifyToken, postController.getPostsPrivate);
+router.post('/travel', verifyToken, upload.single('image'), postController.createPost);
+router.post('/list', verifyToken, upload.array('images'), postController.createPostList);
 
 module.exports = router;

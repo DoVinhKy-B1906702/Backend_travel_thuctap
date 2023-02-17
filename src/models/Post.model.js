@@ -14,13 +14,8 @@ const postSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId, ref: 'users' 
     },
-    likeCount: {
-        type: Number,
-        default: 0
-    },
-    image: {
-        type:String,
-        require: true
+    images: {
+        type:Array,
     },
     cloudinary_id: {
         type: String,

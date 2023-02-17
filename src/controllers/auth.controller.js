@@ -132,7 +132,7 @@ exports.updateUser = async (req, res, next) => {
 exports.updateImage = async (req, res, next) => {
     try {
        
-        const result = await cloudinary.uploader.upload(req.file.path,{ folder: "travel" });
+        const result = await cloudinary.uploader.upload(req.file.path,{ folder: "avatar" });
         let updateInfo = {
             image: result.secure_url,
             cloudinary_id: result.public_id,
@@ -149,6 +149,33 @@ exports.updateImage = async (req, res, next) => {
 
 
         res.status(200).json({success: true, message: 'Congratulation !!!', info: updateInfo});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            error: error
+        });
+    }
+}
+
+// @route get /auth/:user
+// @desc get user
+// @access public and having token
+exports.findUser = async (req, res) => {
+
+    try {
+        const allUsers = await User.find({
+            "$or": [
+                {
+                  "username": {
+                    "$regex": req.query.q,
+                    "$options": "i"
+                }
+                  
+                  
+                }],
+        }).select('-password');
+
+        res.status(200).json({length: allUsers.length,success: true, message: 'Get User Successfully !!!', allUsers});
     } catch (error) {
         console.log(error);
         res.status(500).json({
