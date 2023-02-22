@@ -11,4 +11,6 @@ router.get('/:id', verifyToken, postController.getPostsPrivate);
 router.post('/travel', verifyToken, upload.single('image'), postController.createPost);
 router.post('/list', verifyToken, upload.array('images'), postController.createPostList);
 
+router.put('/comment/:id', verifyToken, postController.updateComment)
+
 module.exports = router;

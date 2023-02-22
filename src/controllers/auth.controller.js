@@ -28,20 +28,27 @@ exports.register = async (req, res, next) => {
     // simple validation
     if (!username || !password)
         return res.status(400).json({success:false, message: 'Missing username/password'})
-   
+        
     try {
-        // Check for exiting user
+        // check for exiting id
         const user = await User.findOne({username});
+        
+
       
-        if (user) {
-            return res.status(400).json({success: false, message :'Username already exited'});
+        if (user ) {
+            return res.status(400).json({success: false, message :'Username đã tồn tại!! '});
         }
 
         // all Good
+        
 
         const hashedPassword = await argon2.hash(password);
         const newUser = new User({
+            image: gender ? 
+            'https://res.cloudinary.com/dkzebfbq2/image/upload/v1667321172/avatardefault_zo3shv.png' :
+            'https://res.cloudinary.com/dkzebfbq2/image/upload/v1676716155/1000_F_279669366_Lk12QalYQKMczLEa4ySjhaLtx1M2u7e6_sozfwx.jpg' ,
             gender,
+            yourId: `${username}${firstName}`,
             firstName,
             lastName,
             username,
@@ -72,7 +79,7 @@ exports.login = async (req, res, next) => {
         const user = await User.findOne({username});
     
         if (!user ) {
-            return res.status(400).json({success: false, message: 'Incorrect username/email or password'});
+            return res.status(400).json({success: false, message: 'Incorrect username or password'});
         }
 
         // Username found
@@ -98,15 +105,19 @@ exports.login = async (req, res, next) => {
 
 exports.updateUser = async (req, res, next) => {
     try {
-        const {gender, firstName, lastName , email, phone} = req.body
+        const {gender, firstName, lastName , email, phone, yourId} = req.body
         let updateInfo = {
             gender,
             firstName, 
             lastName,
             email,
-            phone
+            phone,
+            yourId
         };
-        
+        const newId = await User.findOne({yourId});
+        if (newId) {
+            res.status(400).json({success: true, message:'Id này đã tồn tại !!'})
+        }
         const infoUpdateCondition = {_id: req.params.id};
         updateInfo = await User.findOneAndUpdate(infoUpdateCondition, updateInfo, {new: true});
         
@@ -131,8 +142,15 @@ exports.updateUser = async (req, res, next) => {
 
 exports.updateImage = async (req, res, next) => {
     try {
+        const person = await User.findById(req.params.id);
+        if(person.cloudinary_id) {
+            await cloudinary.uploader.destroy(person.cloudinary_id);
+        }
        
+        
         const result = await cloudinary.uploader.upload(req.file.path,{ folder: "avatar" });
+        
+
         let updateInfo = {
             image: result.secure_url,
             cloudinary_id: result.public_id,
@@ -157,29 +175,3 @@ exports.updateImage = async (req, res, next) => {
     }
 }
 
-// @route get /auth/:user
-// @desc get user
-// @access public and having token
-exports.findUser = async (req, res) => {
-
-    try {
-        const allUsers = await User.find({
-            "$or": [
-                {
-                  "username": {
-                    "$regex": req.query.q,
-                    "$options": "i"
-                }
-                  
-                  
-                }],
-        }).select('-password');
-
-        res.status(200).json({length: allUsers.length,success: true, message: 'Get User Successfully !!!', allUsers});
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            error: error
-        });
-    }
-}

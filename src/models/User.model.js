@@ -15,14 +15,18 @@ const UserSchema = mongoose.Schema({
         required: true,
         unique: true
     },  
+    yourId: {
+        type: String,
+        required: true,
+        unique: true
+    },
     password: {type: String, required: true, minlength: 8,},
     admin:{
         type: Boolean,
         default: false,
     },
     image: {
-        type: String,
-        default: "https://res.cloudinary.com/dkzebfbq2/image/upload/v1667321172/avatardefault_zo3shv.png"
+        type: String
     },
     cash:{
         type: Number,

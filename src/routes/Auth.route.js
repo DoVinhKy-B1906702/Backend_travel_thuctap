@@ -13,7 +13,5 @@ router.get('/', verifyToken, authController.getUser);
 router.put('/:id',verifyToken ,authController.updateUser);
 router.put('/image/:id',verifyToken , upload.single('image'),authController.updateImage);
 
-// search User
-router.get('/search', verifyToken, authController.findUser);
 
 module.exports = router;

@@ -1,6 +1,7 @@
 
 
 const Post = require('../models/Post.model');
+const User = require('../models/User.model');
 const cloudinary = require('../utils/cloudinary');
 
 const dotenv = require('dotenv');
@@ -14,7 +15,7 @@ dotenv.config();
 exports.getPosts = async (req, res) => {
     try {
        
-        const posts = await Post.find().sort({createdAt: -1}).populate('user', ['username','firstName', 'lastName', 'image']).limit(parseInt(req.query.limit));
+        const posts = await Post.find().sort({createdAt: -1}).populate('user', ['firstName', 'lastName', 'image', 'gender', 'yourId', '_id']).limit(parseInt(req.query.limit));
         // let newArray = [];
         // for (let i = posts.length - 1; i >= 0; i--) {
         //  newArray.push(posts[i]);
@@ -30,7 +31,9 @@ exports.getPosts = async (req, res) => {
 // @access Public
 exports.getPostsPrivate = async (req, res) => {
     try {
-        const posts = await Post.find({user: req.params.id}).populate('user', ['username','firstName', 'lastName', 'image']);
+        const posts = await Post.find({user: req.params.id})
+            .populate('user', ['firstName', 'lastName', 'image', 'gender', 'yourId', '_id'])
+            .populate('comments.userID')
 
         res.status(200).json({success: true, posts})
     } catch (error) {
@@ -114,9 +117,28 @@ exports.createPostList = async (req,res) => {
 }
 
 // @route UPDATE /posts/:idPosts
-// @desc Update post's like
+// @desc Update post's comment
 // @access public and having token
+exports.updateComment = async (req, res) => {
+    try {
+        let post =  await Post.findByIdAndUpdate({_id: req.params.id})
+            .populate('user', ['firstName', 'lastName', 'image', 'gender', 'yourId', '_id'])
+            .populate('comments.userID')
+        // let user = await User.findById(req.userId).select('-password');
+        post.comments.push({userID: req.userId, text: req.body.text})
+        
+        
 
+        post.save();
+
+        res.status(200).json({success: true, message: 'Happy Learning', post })
+    
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({success: false, message: 'Internal server error'})
+    }
+   
+}
 
 
 

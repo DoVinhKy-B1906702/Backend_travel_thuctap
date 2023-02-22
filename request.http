@@ -11,8 +11,8 @@ POST http://localhost:5000/auth/login
 Content-Type: application/json
 
 {
-    "username": "dovinhky2023",
-    "password": "dovinhky2023"
+    "username": "admin1",
+    "password": "12345678"
 }
 
 ###
@@ -23,9 +23,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2ViN
 
 ###
 
-GET http://localhost:5000/posts/63eb5c064c3fd90adca40c15
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2ViNjA2OWJhODA1ZThiNTY5NzMyMGEiLCJpYXQiOjE2NzYzNzAyNTR9.9CJ9D6PYyF1cEER-6oemF_IfTlyMlWtGiioLGZFugRY
-
+GET http://localhost:5000/posts/63f38f1273ee60892be35cf4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2YzM2E3MjE1OWIwMThjOTEzOWVlZTAiLCJpYXQiOjE2NzcwMDAxNjB9.eFhABJezJB9Rh8tn6spldGH-En1GDAPpAmHm4ncM9ms
 ###
 
 PATCH   http://localhost:5000/posts/63eb6120ba805e8b56973219
@@ -35,3 +34,18 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2U0Z
 
 GET http://localhost:5000/auth/search?q=a
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2ViNjA2OWJhODA1ZThiNTY5NzMyMGEiLCJpYXQiOjE2NzYzNzAyNTR9.9CJ9D6PYyF1cEER-6oemF_IfTlyMlWtGiioLGZFugRY
+
+
+###
+
+GET http://localhost:5000/search/searchID?yourId=admin1
+
+
+###
+PUT http://localhost:5000/posts/comment/63f491325f865c1e9ba6026c
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2YzM2E3MjE1OWIwMThjOTEzOWVlZTAiLCJpYXQiOjE2NzcwMDAxNjB9.eFhABJezJB9Rh8tn6spldGH-En1GDAPpAmHm4ncM9ms
+
+{
+    "text" : "Comment ne hihi 6"
+}
