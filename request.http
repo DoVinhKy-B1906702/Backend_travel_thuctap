@@ -32,13 +32,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2U0Z
 
 ###
 
-GET http://localhost:5000/auth/search?q=a
+GET http://localhost:5000/auth/search?q=admin1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2ViNjA2OWJhODA1ZThiNTY5NzMyMGEiLCJpYXQiOjE2NzYzNzAyNTR9.9CJ9D6PYyF1cEER-6oemF_IfTlyMlWtGiioLGZFugRY
 
 
 ###
 
-GET http://localhost:5000/search/searchID?id=63f38f1273ee60892be35cf4
+GET http://localhost:5000/search/searchyourID?q=admin1Ky
 
 
 ###
@@ -49,3 +49,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2YzM
 {
     "text" : "Đỉnh thật hhi ăedăeádcsadklsadlksạdlksadjlksakdsa35345435435435ádsad21332532343243242342342354354353454353454354353454354353453454334543543"
 }
+
+###
+POST http://localhost:5000/like/add?post=63f636e21c276c65f7e8be4e
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2YzM2E3MjE1OWIwMThjOTEzOWVlZTAiLCJpYXQiOjE2NzcxNjM3OTB9.tWsbOxLVERexJ_C1ltRckr5xTBmu4Y7hzza4LgI4N6M
+
+###
+GET http://localhost:5000/like/get?post=63f636e21c276c65f7e8be4e
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2YzM2E3MjE1OWIwMThjOTEzOWVlZTAiLCJpYXQiOjE2NzcxNjM3OTB9.tWsbOxLVERexJ_C1ltRckr5xTBmu4Y7hzza4LgI4N6M

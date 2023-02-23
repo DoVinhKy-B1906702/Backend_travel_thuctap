@@ -37,11 +37,28 @@ exports.findUser = async (req, res) => {
 // @desc get 1 user
 // @access public and having token
 
-exports.findUserbyYourId = async (req, res) => {
+// exports.findUserbyYourId = async (req, res) => {
+//     try {
+//         const yourId = req.query.id;
+//         const user = await User.findById(yourId).select('-password -username');
+//         const posts = await Post.find({user: yourId}).sort({createdAt: -1})
+//             .populate('user', ['firstName', 'lastName', 'image', 'gender', 'yourId', '_id'])
+//             .populate('comments.user',['firstName', 'lastName', 'image', 'gender', 'yourId', '_id'])
+        
+//         res.status(200).json({success: true, message: 'Get User Successfully !!!', user, posts});
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).json({
+//             error: error
+//         });
+//     }
+// }
+exports.findUserbyYour = async (req, res) => {
     try {
-        const yourId = req.query.id;
-        const user = await User.findById(yourId).select('-password -username');
-        const posts = await Post.find({user: yourId}).sort({createdAt: -1})
+        // const yourId = req.query.id;
+        const user = await User.findOne({yourId : req.query.q}).select('-password -username');
+        const id = user._id;
+        const posts = await Post.find({user: id}).sort({createdAt: -1})
             .populate('user', ['firstName', 'lastName', 'image', 'gender', 'yourId', '_id'])
             .populate('comments.user',['firstName', 'lastName', 'image', 'gender', 'yourId', '_id'])
         
