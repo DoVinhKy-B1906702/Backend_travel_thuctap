@@ -42,7 +42,7 @@ exports.getLikes = async (req, res) => {
         try {
             const post = req.query.post;
             const allLike = await Like.find({post: post}).sort({createdAt: -1})
-                        .populate('user', ['firstName', 'lastName', 'image', 'gender', 'yourId'])
+                        .populate('user', ['firstName', 'lastName', 'image', 'gender', 'yourId','_id'])
             res.status(200).json({success: true, message: 'Get like successfully !!!', like: allLike});
         } catch (error) {
             console.log(error);
