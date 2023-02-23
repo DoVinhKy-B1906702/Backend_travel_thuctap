@@ -15,7 +15,10 @@ dotenv.config();
 exports.getPosts = async (req, res) => {
     try {
        
-        const posts = await Post.find().sort({createdAt: -1}).populate('user', ['firstName', 'lastName', 'image', 'gender', 'yourId', '_id']).limit(parseInt(req.query.limit));
+        const posts = await Post.find().sort({createdAt: -1})
+            .populate('user', ['firstName', 'lastName', 'image', 'gender', 'yourId', '_id'])
+            .populate('comments.user',['firstName', 'lastName', 'image', 'gender', 'yourId', '_id'])
+            .limit(parseInt(req.query.limit))
         // let newArray = [];
         // for (let i = posts.length - 1; i >= 0; i--) {
         //  newArray.push(posts[i]);
@@ -33,7 +36,7 @@ exports.getPostsPrivate = async (req, res) => {
     try {
         const posts = await Post.find({user: req.params.id})
             .populate('user', ['firstName', 'lastName', 'image', 'gender', 'yourId', '_id'])
-            .populate('comments.userID')
+            .populate('comments.user',['firstName', 'lastName', 'image', 'gender', 'yourId', '_id'])
 
         res.status(200).json({success: true, posts})
     } catch (error) {
@@ -123,9 +126,9 @@ exports.updateComment = async (req, res) => {
     try {
         let post =  await Post.findByIdAndUpdate({_id: req.params.id})
             .populate('user', ['firstName', 'lastName', 'image', 'gender', 'yourId', '_id'])
-            .populate('comments.userID')
+            .populate('comments.user',['firstName', 'lastName', 'image', 'gender', 'yourId', '_id'])
         // let user = await User.findById(req.userId).select('-password');
-        post.comments.push({userID: req.userId, text: req.body.text})
+        post.comments.push({user: req.userId, text: req.body.text})
         
         
 

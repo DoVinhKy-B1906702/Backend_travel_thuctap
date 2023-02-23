@@ -38,7 +38,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2ViN
 
 ###
 
-GET http://localhost:5000/search/searchID?yourId=admin1
+GET http://localhost:5000/search/searchID?id=63f38f1273ee60892be35cf4
 
 
 ###
@@ -47,5 +47,5 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2YzM2E3MjE1OWIwMThjOTEzOWVlZTAiLCJpYXQiOjE2NzcwMDAxNjB9.eFhABJezJB9Rh8tn6spldGH-En1GDAPpAmHm4ncM9ms
 
 {
-    "text" : "Comment ne hihi 6"
+    "text" : "Đỉnh thật hhi ăedăeádcsadklsadlksạdlksadjlksakdsa35345435435435ádsad21332532343243242342342354354353454353454354353454354353453454334543543"
 }

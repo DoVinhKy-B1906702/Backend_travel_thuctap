@@ -41,9 +41,9 @@ exports.findUserbyYourId = async (req, res) => {
     try {
         const yourId = req.query.id;
         const user = await User.findById(yourId).select('-password -username');
-        const posts = await Post.find({user: yourId})
+        const posts = await Post.find({user: yourId}).sort({createdAt: -1})
             .populate('user', ['firstName', 'lastName', 'image', 'gender', 'yourId', '_id'])
-
+            .populate('comments.user',['firstName', 'lastName', 'image', 'gender', 'yourId', '_id'])
         
         res.status(200).json({success: true, message: 'Get User Successfully !!!', user, posts});
     } catch (error) {
