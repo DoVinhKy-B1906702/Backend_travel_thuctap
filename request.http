@@ -11,7 +11,7 @@ POST http://localhost:5000/auth/login
 Content-Type: application/json
 
 {
-    "username": "admin1",
+    "username": "admin2",
     "password": "12345678"
 }
 
@@ -59,3 +59,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2YzM
 GET http://localhost:5000/like/get?post=63f636e21c276c65f7e8be4e
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2YzM2E3MjE1OWIwMThjOTEzOWVlZTAiLCJpYXQiOjE2NzcxNjM3OTB9.tWsbOxLVERexJ_C1ltRckr5xTBmu4Y7hzza4LgI4N6M
+
+###
+DELETE  http://localhost:5000/posts/63fb300dd37685cfddb7ad55
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2Y2NGJkYmJiYTFjMDhkNjA4NWQ5ZjkiLCJpYXQiOjE2Nzc0MDQ0NjV9.Cx6mzZYQZLeQYzoMq607PtR4WtE_2Oe5hWnZHb6Q4OQ

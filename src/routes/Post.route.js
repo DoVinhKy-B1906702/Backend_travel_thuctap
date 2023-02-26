@@ -13,4 +13,7 @@ router.post('/list', verifyToken, upload.array('images'), postController.createP
 
 router.put('/comment/:id', verifyToken, postController.updateComment)
 
+// delete post
+router.delete('/:id', verifyToken, postController.deletePost);
+
 module.exports = router;

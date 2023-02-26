@@ -1,6 +1,7 @@
 
 
 const Post = require('../models/Post.model');
+const Like = require('../models/Like.model');
 const User = require('../models/User.model');
 const cloudinary = require('../utils/cloudinary');
 
@@ -86,7 +87,7 @@ const cloudinaryImageUploadMethod = async file => {
         cloudinary.uploader.upload( file,{ folder: "postTravel" } , (err, res) => {
           if (err) return res.status(500).send("upload image error")
             resolve({
-              res: res.secure_url
+              res: {image: res.secure_url, cloudinary_id: res.public_id }
             }) 
           }
         ) 
@@ -145,3 +146,30 @@ exports.updateComment = async (req, res) => {
 
 
 
+// @route delete /posts/:idPost
+// @desc delete a post
+// @access private and having token
+
+exports.deletePost = async (req, res) => {
+    try {
+        const postDeleteCondition = {_id: req.params.id, user: req.userId};
+        // const deleteImage = await Post.findOne({_id: req.params.id})
+       
+        const deletePost = await Post.findOneAndDelete(postDeleteCondition);
+        // xoa hinh anh
+        for (let i = 0; i < deletePost.images.length ; i++) {
+            await cloudinary.uploader.destroy(deletePost.images[i].cloudinary_id);
+        }
+          // user not authorised to update post or post not found
+          if (!deletePost) {
+            return res.status(401).json({success: false, message:'Post not found or user not authorised '})
+        }
+        await Like.deleteMany({post: req.params.id});
+        
+
+        res.status(200).json({success: true ,message:'Deleted successfully !!!'})
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({success: false, message: 'Internal server error'})
+    }
+}

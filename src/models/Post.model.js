@@ -22,9 +22,12 @@ const postSchema = new Schema({
         }
     ]
     ,
-    images: {
-        type:Array,
-    },
+    images: [
+        {
+            image: String,
+            cloudinary_id: String
+        }
+    ],
     cloudinary_id: {
         type: String,
         require: true
