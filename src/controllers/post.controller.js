@@ -144,7 +144,19 @@ exports.updateComment = async (req, res) => {
    
 }
 
-
+// @route delete /posts/:comment
+// @desc delete a post
+// @access private and having token
+exports.deleteComment = async (req, res) => {
+    try {
+        let post =  await Post.updateOne({_id: req.params.id}, {$pull: {comments: {_id :req.query.id}}})
+        
+        res.status(200).json({success: true, message: 'Đã xóa thành công'})
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({success: false, message: 'Internal server error'})
+    }
+}
 
 // @route delete /posts/:idPost
 // @desc delete a post
