@@ -14,15 +14,32 @@ exports.findUser = async (req, res) => {
         const allUsers = await User.find({
             "$or": [
                 {
-                  "username": {
+                  "yourId": {
+                    "$regex": req.query.q,
+                    "$options": "i"
+                    }
+               
+                  
+                }
+                ,{
+                "lastName": {
                     "$regex": req.query.q,
                     "$options": "i"
                 }
-                  
-                  
-                }],
-        }).select('-password');
-
+                }
+                ,
+                {
+                    "firstName": {
+                        "$regex": req.query.q,
+                        "$options": "i",
+                        
+                    }
+                }
+                
+            ],
+        }).select('-password -username');
+       
+        // const allUsers = await User.find({$searchUsers: {$search: req.query.q}}).select('-password');
         res.status(200).json({length: allUsers.length,success: true, message: 'Get User Successfully !!!', allUsers});
     } catch (error) {
         console.log(error);
@@ -37,22 +54,7 @@ exports.findUser = async (req, res) => {
 // @desc get 1 user
 // @access public and having token
 
-// exports.findUserbyYourId = async (req, res) => {
-//     try {
-//         const yourId = req.query.id;
-//         const user = await User.findById(yourId).select('-password -username');
-//         const posts = await Post.find({user: yourId}).sort({createdAt: -1})
-//             .populate('user', ['firstName', 'lastName', 'image', 'gender', 'yourId', '_id'])
-//             .populate('comments.user',['firstName', 'lastName', 'image', 'gender', 'yourId', '_id'])
-        
-//         res.status(200).json({success: true, message: 'Get User Successfully !!!', user, posts});
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).json({
-//             error: error
-//         });
-//     }
-// }
+
 exports.findUserbyYour = async (req, res) => {
     try {
         // const yourId = req.query.id;

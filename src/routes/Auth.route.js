@@ -8,7 +8,7 @@ const authController = require('../controllers/auth.controller');
 router.post('/register', authController.register);
 router.post('/login', authController.login);
 router.get('/', verifyToken, authController.getUser);
-
+router.get('/:id', verifyToken, authController.getUserById);
 
 router.put('/:id',verifyToken ,authController.updateUser);
 router.put('/image/:id',verifyToken , upload.single('image'),authController.updateImage);

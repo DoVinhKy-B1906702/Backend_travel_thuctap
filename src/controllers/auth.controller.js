@@ -22,7 +22,20 @@ exports.getUser = async (req, res) => {
         res.status(500).json({success: false, message: 'Internal server error', api:'get Change router'});
     }
 }
+exports.getUserById = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id).select('-password');
+        if(!user) {
+            return res.status(400).json({success: false, message:'User not found'})
+        }
 
+        res.json({success: true, user})
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({success: false, message: 'Internal server error', api:'get Change router'});
+    }
+}
 exports.register = async (req, res, next) => {
     const {username, password,  gender, firstName, lastName } = req.body;
     // simple validation

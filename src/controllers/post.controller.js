@@ -185,3 +185,7 @@ exports.deletePost = async (req, res) => {
         res.status(500).json({success: false, message: 'Internal server error'})
     }
 }
+
+// @route update post with title content /posts/:idPost
+// @desc delete a post
+// @access private and having token
