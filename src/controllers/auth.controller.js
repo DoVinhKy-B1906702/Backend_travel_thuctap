@@ -5,6 +5,7 @@ const User = require('../models/User.model');
 const cloudinary = require('../utils/cloudinary');
 
 const dotenv = require('dotenv');
+const { v4: uuidv4 } = require('uuid');
 
 dotenv.config();
 
@@ -61,8 +62,8 @@ exports.register = async (req, res, next) => {
             'https://res.cloudinary.com/dkzebfbq2/image/upload/v1667321172/avatardefault_zo3shv.png' :
             'https://res.cloudinary.com/dkzebfbq2/image/upload/v1676716155/1000_F_279669366_Lk12QalYQKMczLEa4ySjhaLtx1M2u7e6_sozfwx.jpg' ,
             gender,
-            yourId: `${username}${firstName}`,
             firstName,
+            yourId:uuidv4(),
             lastName,
             username,
             password: hashedPassword,
